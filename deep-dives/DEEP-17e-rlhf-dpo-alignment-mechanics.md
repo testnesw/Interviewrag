@@ -1,5 +1,7 @@
 # DEEP MECHANICS · RLHF, DPO & Alignment
 
+> 🧠 **Hook:** *Training a dog* — reward good answers; the KL leash stops it going feral. **DPO** skips the trainer.
+>
 > Level 2 — how base models become aligned assistants: SFT → reward model → RLHF/PPO,
 > and the simpler DPO alternative.
 

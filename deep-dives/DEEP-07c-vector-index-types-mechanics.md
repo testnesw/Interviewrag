@@ -1,5 +1,7 @@
 # DEEP MECHANICS · Vector Index Types (ANN: HNSW, IVF, PQ)
 
+> 🧠 **Hook:** *Friend-of-a-friend* — hop through a graph (HNSW) to find the closest match fast instead of checking everyone.
+>
 > Level 2 — exact vs approximate search, HNSW, IVF, product quantization, and
 > the recall/latency/memory trade-offs.
 

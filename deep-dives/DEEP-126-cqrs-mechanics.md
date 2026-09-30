@@ -1,5 +1,7 @@
 # DEEP MECHANICS · CQRS
 
+> 🧠 **Hook:** *Separate in/out doors* — writes go one way (commands), reads another (queries), each optimized independently.
+>
 > Level 2 — command/query separation, read/write models, consistency,
 > event sourcing pairing, and when to use it.
 

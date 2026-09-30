@@ -1,5 +1,7 @@
 # DEEP MECHANICS · Distillation & Model Compression
 
+> 🧠 **Hook:** *Apprentice learning from a master* — the student copies the teacher's instincts (soft labels).
+>
 > Level 2 — how to shrink models for cheaper/faster inference: distillation,
 > quantization, pruning, and the trade-offs.
 

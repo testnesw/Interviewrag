@@ -1,5 +1,7 @@
 # DEEP MECHANICS · Reranking
 
+> 🧠 **Hook:** *Resume shortlist → real interview* — a cheap filter first, an expensive judge second.
+>
 > Level 2 — two-stage retrieval, cross-encoders vs bi-encoders, semantic
 > reranking, and why it boosts RAG quality.
 

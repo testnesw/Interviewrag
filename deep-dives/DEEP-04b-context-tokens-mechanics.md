@@ -1,5 +1,7 @@
 # DEEP MECHANICS · Context Windows, Tokens & Quantization
 
+> 🧠 **Hook:** *A whiteboard* — bigger holds more but costs more to keep; the **KV-cache** is what fills it, growing with every token.
+>
 > Level 2 — tokenization, context limits, the cost of long context, KV cache,
 > and quantization for efficient inference.
 

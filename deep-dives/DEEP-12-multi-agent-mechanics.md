@@ -1,5 +1,7 @@
 # DEEP MECHANICS · Multi-Agent Architecture
 
+> 🧠 **Hook:** *A project team* — a manager (orchestrator) splits work among specialists who report back.
+>
 > Level 2 — orchestration topologies, how agents communicate, when multi-agent
 > beats a single agent, and the failure modes (loops, cost blow-up, error
 > propagation).

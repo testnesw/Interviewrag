@@ -1,5 +1,7 @@
 # DEEP MECHANICS · Model Routing & Cascading
 
+> 🧠 **Hook:** *Triage nurse* — easy cases to the cheap clinic, hard ones to the specialist.
+>
 > Level 2 — routing requests to the right model by difficulty/cost, cascades,
 > and the quality/cost/latency trade-off.
 

@@ -1,5 +1,7 @@
 # DEEP MECHANICS · RAG (Retrieval-Augmented Generation)
 
+> 🧠 **Hook:** *Open-book exam* — the model looks up the right page first instead of memorizing.
+>
 > Level 2 — the "3rd/4th follow-up" depth interviewers actually probe.
 > This goes past *what* RAG is into *exactly how* each piece works, the math,
 > the failure modes, and the hard questions with real answers.

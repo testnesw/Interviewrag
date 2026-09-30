@@ -1,5 +1,7 @@
 # DEEP MECHANICS · Prompt Caching & Semantic Caching
 
+> 🧠 **Hook:** *Keep the stew simmering* — reuse the shared prefix instead of re-cooking it on every request.
+>
 > Level 2 — prompt (prefix) caching vs semantic caching, how each works, cost/
 > latency wins, and when to use them.
 

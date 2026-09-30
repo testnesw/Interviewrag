@@ -1,5 +1,7 @@
 # DEEP MECHANICS · MCP (Model Context Protocol)
 
+> 🧠 **Hook:** *USB-C for AI tools* — one standard plug so any tool connects to any model.
+>
 > Level 2 — what MCP standardizes, its client-server architecture, primitives
 > (tools/resources/prompts), transport, and why it matters vs ad-hoc function
 > calling.

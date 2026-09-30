@@ -1,5 +1,7 @@
 # DEEP MECHANICS · Structured Outputs & JSON Mode
 
+> 🧠 **Hook:** *Fill-in-the-blanks form* — constrain decoding so the output *must* be valid JSON/schema.
+>
 > Level 2 — guaranteeing machine-parseable LLM output, JSON mode vs structured
 > outputs, schemas, and function calling.
 

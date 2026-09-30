@@ -1,5 +1,7 @@
 # DEEP MECHANICS · Domain-Driven Design (DDD)
 
+> 🧠 **Hook:** *Drawing borders on a map* — bounded contexts fence off each domain with its own shared language.
+>
 > Level 2 — ubiquitous language, bounded contexts, aggregates, and strategic vs
 > tactical design.
 

@@ -1,5 +1,7 @@
 # DEEP MECHANICS · Positional Encodings (RoPE & context extension)
 
+> 🧠 **Hook:** *Clock hands* — position = angle; what matters is the *difference* between two tokens' angles (relative distance).
+>
 > Level 2 — why transformers need position info, how RoPE works, and how
 > context windows get extended (NTK / YaRN).
 

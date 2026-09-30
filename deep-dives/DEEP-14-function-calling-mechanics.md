@@ -1,5 +1,7 @@
 # DEEP MECHANICS · Function / Tool Calling
 
+> 🧠 **Hook:** *Ordering from a menu* — the model picks the tool and fills the form; you cook it and hand back the result.
+>
 > Level 2 — the exact request/response protocol, how the model decides, JSON
 > schema, parallel calls, the execution loop, and error/validation handling.
 

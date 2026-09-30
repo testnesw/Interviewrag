@@ -1,5 +1,7 @@
 # DEEP MECHANICS · Private Endpoint
 
+> 🧠 **Hook:** *A private driveway* — traffic reaches the PaaS service without ever touching the public road (internet).
+>
 > Level 2 — how a Private Endpoint gives PaaS a private IP, the critical Private
 > DNS piece, and why it beats service endpoints.
 

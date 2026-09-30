@@ -1,5 +1,7 @@
 # DEEP MECHANICS · Decoding & Sampling
 
+> 🧠 **Hook:** *Spice level* — temperature low = plain/predictable, high = wild/creative. **Top-p** = pile your plate to 90% full, then pick.
+>
 > Level 2 — how the model picks the next token: temperature, top-p/top-k,
 > penalties, greedy vs sampling, and the knobs you set in the API.
 

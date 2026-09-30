@@ -1,5 +1,7 @@
 # DEEP MECHANICS · AI Guardrails & Content Safety
 
+> 🧠 **Hook:** *Bumpers in bowling* — keep the output out of the gutter.
+>
 > Level 2 — the layers of defense, input/output filtering, Azure AI Content
 > Safety, jailbreak/injection defense, and grounding checks — how you actually
 > keep an LLM app safe in production.

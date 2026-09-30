@@ -1,5 +1,7 @@
 # DEEP MECHANICS · Agent Evaluation
 
+> 🧠 **Hook:** *Judging a road trip* — not just "did you arrive?" (outcome) but "was the route sane?" (trajectory).
+>
 > Level 2 — why agents are hard to evaluate, trajectory vs outcome metrics,
 > tool-use correctness, and benchmarks.
 

@@ -1,5 +1,7 @@
 # DEEP MECHANICS · LLM Observability (Tracing, LangSmith, Evals)
 
+> 🧠 **Hook:** *A flight recorder* — every step logged (spans) so you can replay the crash and see cost/latency/quality.
+>
 > Level 2 — tracing LLM apps, spans, cost/latency/quality telemetry, online
 > evals, and debugging non-deterministic chains.
 

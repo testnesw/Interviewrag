@@ -1,5 +1,7 @@
 # DEEP MECHANICS · GraphRAG
 
+> 🧠 **Hook:** *A detective's corkboard* — entities connected by strings to answer "how are these related?"
+>
 > Level 2 — knowledge-graph RAG, entity/relationship extraction, community
 > summaries, and global vs local queries.
 

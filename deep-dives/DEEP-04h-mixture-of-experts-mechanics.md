@@ -1,5 +1,7 @@
 # DEEP MECHANICS · Mixture of Experts (MoE)
 
+> 🧠 **Hook:** *Hospital of specialists* — a receptionist (router) sends each token to 2 relevant doctors, not all of them. Huge staff (total params), small visit (active params).
+>
 > Level 2 — how MoE gives large capacity at small compute, the router, load
 > balancing, and the serving trade-offs.
 

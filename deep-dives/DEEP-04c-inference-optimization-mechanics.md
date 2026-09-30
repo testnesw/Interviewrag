@@ -1,5 +1,7 @@
 # DEEP MECHANICS · Inference Optimization (Speculative Decoding & Serving)
 
+> 🧠 **Hook:** *Intern drafts, boss approves* — speculative decoding: a small model guesses ahead, the big model checks in bulk.
+>
 > Level 2 — why decoding is slow, speculative decoding, batching, KV-cache
 > tricks, and throughput vs latency.
 

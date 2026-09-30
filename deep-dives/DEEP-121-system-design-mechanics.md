@@ -1,5 +1,7 @@
 # DEEP MECHANICS · System Design (Worked, with the Math)
 
+> 🧠 **Hook:** *Back-of-the-envelope first* — estimate load → then cache, shard, and choose consistency to fit the numbers.
+>
 > Level 2 — the actual estimation math, the caching/sharding/consistency
 > mechanics with *why*, and a fully worked GenAI system design you can narrate
 > end-to-end. This is the capstone interview skill.

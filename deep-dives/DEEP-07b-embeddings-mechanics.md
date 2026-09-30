@@ -1,5 +1,7 @@
 # DEEP MECHANICS · Embeddings & Embedding Models
 
+> 🧠 **Hook:** *GPS coordinates for meaning* — similar meaning sits at nearby points.
+>
 > Level 2 — what embeddings are, how they're trained/used, model choice,
 > dimensions, and similarity.
 

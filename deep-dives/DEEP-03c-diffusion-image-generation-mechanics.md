@@ -1,5 +1,7 @@
 # DEEP MECHANICS · Diffusion & Image Generation
 
+> 🧠 **Hook:** *A sculptor removing noise* — start from a block of static and chip away until an image appears.
+>
 > Level 2 — how diffusion models generate images, latent diffusion, conditioning
 > (text/ControlNet), and sampling trade-offs.
 

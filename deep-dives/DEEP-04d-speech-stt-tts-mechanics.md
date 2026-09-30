@@ -1,5 +1,7 @@
 # DEEP MECHANICS · Speech — STT & TTS
 
+> 🧠 **Hook:** *Ears + mouth* — STT turns sound into text, TTS turns text back into sound; stream both for low latency.
+>
 > Level 2 — how speech-to-text and text-to-speech work, streaming vs batch,
 > and voice-agent pipelines.
 

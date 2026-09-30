@@ -1,5 +1,7 @@
 # DEEP MECHANICS · Event-Driven Architecture
 
+> 🧠 **Hook:** *A newspaper subscription* — publishers don't know who reads; subscribers react to events they care about.
+>
 > Level 2 — brokers vs their guarantees, ordering, delivery semantics,
 > idempotency, event sourcing, CQRS, and the failure modes (dead-letter,
 > poison messages, duplicate delivery) interviewers drill.

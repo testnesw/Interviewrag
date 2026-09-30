@@ -1,5 +1,7 @@
 # DEEP MECHANICS · Managed Identity & Entra ID
 
+> 🧠 **Hook:** *A building badge, not a password* — Azure proves who the app is; there's no secret to leak or rotate.
+>
 > Level 2 — how tokens are actually acquired, OAuth2/OIDC flows, system vs
 > user-assigned MI internals (IMDS), workload identity federation, and how
 > RBAC is evaluated — plus how to debug a 403.

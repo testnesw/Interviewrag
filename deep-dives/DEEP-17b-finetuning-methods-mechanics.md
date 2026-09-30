@@ -1,5 +1,7 @@
 # DEEP MECHANICS · Fine-Tuning Methods (LoRA / QLoRA / PEFT / RLHF)
 
+> 🧠 **Hook:** *Teach a skill (fine-tune) vs hand a reference book (RAG)* — style → tune, facts → RAG.
+>
 > Level 2 — full vs parameter-efficient fine-tuning, LoRA/QLoRA mechanics,
 > alignment (RLHF/DPO), and fine-tune vs RAG vs prompt.
 

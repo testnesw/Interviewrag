@@ -1,5 +1,7 @@
 # DEEP MECHANICS · LoRA & QLoRA (Full Detail)
 
+> 🧠 **Hook:** *Sticky tabs on a textbook* — don't rewrite the book, add small notes ($\Delta W = BA$).
+>
 > Level 2+ — the math, the hyperparameters, memory accounting, QLoRA's 3
 > innovations, serving adapters, and every common interview follow-up.
 

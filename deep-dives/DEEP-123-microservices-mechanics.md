@@ -1,5 +1,7 @@
 # DEEP MECHANICS · Microservices (Distributed Systems Internals)
 
+> 🧠 **Hook:** *A relay race with an undo button* — Saga = each service does its leg, and compensates if a later one drops the baton.
+>
 > Level 2 — the hard parts: how Saga actually works step by step, the outbox
 > pattern mechanics, idempotency, delivery guarantees, boundary decisions, and
 > the resilience internals that prevent cascading failure.

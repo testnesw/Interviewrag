@@ -1,5 +1,7 @@
 # DEEP MECHANICS · Multimodal & Vision Models
 
+> 🧠 **Hook:** *Giving the LLM eyes* — a translator (vision encoder + projection) turns the image into tokens it can read.
+>
 > Level 2 — how LLMs "see", vision encoders + projection, multimodal RAG, OCR
 > vs native vision, and use cases.
 

@@ -1,5 +1,7 @@
 # DEEP MECHANICS · Attention & KV-Cache (MHA / GQA / MLA)
 
+> 🧠 **Hook:** *Dating app* — Query = what you want, Key = what each token offers, Value = its info; best match gets the attention. The **KV-cache** = *sticky notes of the past* so you don't re-read the whole book each word.
+>
 > Level 2 — how self-attention works, why the KV-cache exists, and how GQA/MLA/
 > FlashAttention make long-context inference affordable.
 

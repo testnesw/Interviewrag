@@ -1,5 +1,7 @@
 # DEEP MECHANICS · Agentic Memory Architectures
 
+> 🧠 **Hook:** *A person's mind* — scratchpad (working), diary (episodic), knowledge (semantic), habits (procedural).
+>
 > Level 2 — short-term vs long-term memory, working/episodic/semantic/procedural,
 > context management, and retrieval-based memory.
 

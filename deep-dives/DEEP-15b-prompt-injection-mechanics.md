@@ -1,5 +1,7 @@
 # DEEP MECHANICS · Prompt Injection & LLM Security Defense
 
+> 🧠 **Hook:** *Social engineering for LLMs* — "ignore your boss, listen to me." Treat all input as untrusted.
+>
 > Level 2 — direct vs indirect injection, jailbreaks, defense-in-depth, and the
 > OWASP LLM risks.
 
