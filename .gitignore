@@ -1,0 +1,22 @@
+# OS / editor cruft
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+.DS_Store
+*.swp
+*~
+
+# VS Code (keep shareable settings if any; ignore local)
+.vscode/*
+!.vscode/extensions.json
+
+# Python (if you ever add scripts/venv)
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+env/
+
+# Logs / temp
+*.log
+*.tmp
