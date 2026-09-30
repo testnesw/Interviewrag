@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Azure GenAI Architect · Interview Playbook</title>
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/styles/github-dark.min.css" />
+<script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/highlight.min.js"></script>
+<style>
+  :root {
+    --bg: #0d1117; --panel: #161b22; --panel2: #0d1117; --border: #30363d;
+    --text: #e6edf3; --muted: #8b949e; --accent: #58a6ff; --accent2: #1f6feb;
+    --done: #238636; --code: #161b22;
+  }
+  [data-theme="light"] {
+    --bg: #ffffff; --panel: #f6f8fa; --panel2: #ffffff; --border: #d0d7de;
+    --text: #1f2328; --muted: #656d76; --accent: #0969da; --accent2: #0969da;
+    --done: #1a7f37; --code: #f6f8fa;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    background: var(--bg); color: var(--text); display: flex; height: 100vh; overflow: hidden;
+  }
+  /* Sidebar */
+  #sidebar {
+    width: 340px; min-width: 340px; background: var(--panel); border-right: 1px solid var(--border);
+    display: flex; flex-direction: column; height: 100%;
+  }
+  #sidebar header { padding: 16px 18px 12px; border-bottom: 1px solid var(--border); }
+  #sidebar h1 { font-size: 15px; margin: 0 0 2px; letter-spacing: .2px; }
+  #sidebar .sub { font-size: 11.5px; color: var(--muted); }
+  .libtoggle { display: flex; gap: 6px; padding: 10px 12px 0; }
+  .libbtn {
+    flex: 1; background: var(--panel2); border: 1px solid var(--border); color: var(--muted);
+    border-radius: 7px; padding: 7px 6px; font-size: 12px; cursor: pointer; font-weight: 600;
+  }
+  .libbtn.active { background: var(--accent2); color: #fff; border-color: var(--accent2); }
+  .libbtn:hover { border-color: var(--accent); }
+  .toolbar { display: flex; gap: 8px; padding: 12px 14px; border-bottom: 1px solid var(--border); }
+  #search {
+    flex: 1; background: var(--panel2); border: 1px solid var(--border); color: var(--text);
+    border-radius: 7px; padding: 8px 10px; font-size: 13px; outline: none;
+  }
+  #search:focus { border-color: var(--accent); }
+  .btn {
+    background: var(--panel2); border: 1px solid var(--border); color: var(--text);
+    border-radius: 7px; padding: 8px 10px; font-size: 13px; cursor: pointer; white-space: nowrap;
+  }
+  .btn:hover { border-color: var(--accent); }
+  #nav { overflow-y: auto; flex: 1; padding: 8px 8px 40px; }
+  .group-title {
+    font-size: 11px; text-transform: uppercase; letter-spacing: .8px; color: var(--muted);
+    padding: 14px 12px 6px; font-weight: 700;
+  }
+  .item {
+    display: flex; align-items: center; gap: 8px; padding: 8px 10px; border-radius: 7px;
+    cursor: pointer; font-size: 13.5px; color: var(--text); text-decoration: none;
+  }
+  .item:hover { background: rgba(88,166,255,.10); }
+  .item.active { background: var(--accent2); color: #fff; }
+  .item.active .num { color: #cde3ff; }
+  .item .num { color: var(--muted); font-size: 11.5px; min-width: 18px; }
+  .item .chk { margin-left: auto; font-size: 12px; color: var(--done); opacity: 0; }
+  .item.completed .chk { opacity: 1; }
+  .progress { padding: 10px 16px; font-size: 12px; color: var(--muted); border-top: 1px solid var(--border); }
+  .bar { height: 6px; background: var(--border); border-radius: 4px; margin-top: 6px; overflow: hidden; }
+  .bar > span { display: block; height: 100%; background: var(--done); width: 0; transition: width .3s; }
+  /* Content */
+  #content { flex: 1; overflow-y: auto; height: 100%; }
+  #topbar {
+    position: sticky; top: 0; background: var(--bg); border-bottom: 1px solid var(--border);
+    padding: 12px 28px; display: flex; align-items: center; gap: 14px; z-index: 5;
+  }
+  #topbar .crumb { font-size: 13px; color: var(--muted); }
+  #topbar .spacer { flex: 1; }
+  .mark-btn { font-size: 12.5px; }
+  article {
+    max-width: 900px; margin: 0 auto; padding: 32px 40px 120px; line-height: 1.65; font-size: 15px;
+  }
+  article h1 { font-size: 28px; border-bottom: 1px solid var(--border); padding-bottom: 12px; margin-top: 8px; }
+  article h2 { font-size: 21px; border-bottom: 1px solid var(--border); padding-bottom: 7px; margin-top: 34px; }
+  article h3 { font-size: 17px; margin-top: 26px; }
+  article a { color: var(--accent); }
+  article code {
+    background: var(--code); border: 1px solid var(--border); border-radius: 5px;
+    padding: 1.5px 6px; font-size: 13px; font-family: "SF Mono", Consolas, monospace;
+  }
+  article pre {
+    background: var(--code); border: 1px solid var(--border); border-radius: 9px;
+    padding: 16px; overflow-x: auto;
+  }
+  article pre code { background: none; border: none; padding: 0; font-size: 13px; }
+  article table { border-collapse: collapse; width: 100%; margin: 18px 0; font-size: 13.5px; display: block; overflow-x: auto; }
+  article th, article td { border: 1px solid var(--border); padding: 8px 12px; text-align: left; }
+  article th { background: var(--panel); }
+  article blockquote {
+    border-left: 4px solid var(--accent); margin: 16px 0; padding: 6px 16px;
+    background: var(--panel); color: var(--muted); border-radius: 0 8px 8px 0;
+  }
+  article hr { border: none; border-top: 1px solid var(--border); margin: 30px 0; }
+
+  /* ==== IMPORTANT-POINT HIGHLIGHTING ==== */
+  /* Bold text becomes a stressed, colored keyword */
+  article strong {
+    color: #ffd479; font-weight: 700;
+  }
+  [data-theme="light"] article strong { color: #9a6700; }
+
+  /* When highlighter mode is ON, bold gets a marker background too */
+  body.hl article strong {
+    background: rgba(255,212,121,.16); border-radius: 4px;
+    padding: 0 4px; box-shadow: inset 0 -6px 0 rgba(255,212,121,.14);
+  }
+  [data-theme="light"] body.hl article strong {
+    background: #fff3bf; box-shadow: inset 0 -6px 0 #ffe98a;
+  }
+
+  /* Auto-highlighted key architect terms (mnemonics, must-know keywords) */
+  .kw {
+    background: linear-gradient(180deg, transparent 60%, rgba(88,166,255,.35) 60%);
+    color: var(--text); font-weight: 600; padding: 0 1px; border-radius: 2px;
+  }
+  [data-theme="light"] .kw {
+    background: linear-gradient(180deg, transparent 60%, #b6e3ff 60%);
+  }
+  /* Mnemonic codes like B-A-R, T-R-P, C-E-A-D-H-D-I-T */
+  .mnem {
+    background: #2ea04326; color: #3fb950; font-weight: 700;
+    border: 1px solid #2ea04355; border-radius: 5px; padding: 0 5px; font-size: .95em;
+  }
+  [data-theme="light"] .mnem { color: #1a7f37; background: #dafbe1; border-color: #a6e0b5; }
+  /* Warning / "NOT" / never words */
+  .warn { color: #ff7b72; font-weight: 700; }
+  [data-theme="light"] .warn { color: #cf222e; }
+  .welcome { text-align: center; padding: 80px 20px; color: var(--muted); }
+  .welcome h1 { color: var(--text); border: none; }
+  .banner {
+    background: #3d2a00; color: #ffd479; border: 1px solid #9e6a00; border-radius: 9px;
+    padding: 14px 18px; margin: 20px auto; max-width: 820px; font-size: 13.5px; display: none;
+  }
+  [data-theme="light"] .banner { background: #fff8e5; color: #7a5a00; border-color: #e0c060; }
+  ::-webkit-scrollbar { width: 10px; height: 10px; }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 6px; }
+  @media (max-width: 760px) {
+    #sidebar { position: absolute; z-index: 20; height: 100%; transform: translateX(-100%); transition: .25s; }
+    #sidebar.open { transform: translateX(0); }
+    #menuBtn { display: inline-block !important; }
+  }
+  #menuBtn { display: none; }
+</style>
+</head>
+<body>
+  <aside id="sidebar">
+    <header>
+      <h1>🎯 Azure GenAI Architect</h1>
+      <div class="sub">Interview Playbook · 127 topics + 22 deep-dives + 7 banks</div>
+    </header>
+    <div class="libtoggle">
+      <button class="libbtn active" id="libDeep">⭐ Deep Dives</button>
+      <button class="libbtn" id="libAll">📚 All 127 Topics</button>
+    </div>
+    <div class="toolbar">
+      <input id="search" placeholder="Search topics…" />
+      <button class="btn" id="hlBtn" title="Toggle highlighter on important words">🖍️</button>
+      <button class="btn" id="themeBtn" title="Toggle theme">🌙</button>
+    </div>
+    <nav id="nav"></nav>
+    <div class="progress">
+      <span id="progressText">0 / 0 completed</span>
+      <div class="bar"><span id="progressBar"></span></div>
+    </div>
+  </aside>
+
+  <main id="content">
+    <div id="topbar">
+      <button class="btn" id="menuBtn">☰</button>
+      <span class="crumb" id="crumb">Select a topic</span>
+      <span class="spacer"></span>
+      <button class="btn mark-btn" id="markBtn" style="display:none">✓ Mark complete</button>
+    </div>
+    <div class="banner" id="banner">
+      ⚠️ <b>Content couldn't load directly.</b> Browsers block reading local files when you open this by double-click.
+      Run a tiny local server instead: open a terminal in this folder and run
+      <code>python -m http.server 8000</code> then visit <code>http://localhost:8000</code>.
+      In VS Code, the easiest way is right-click this file → <b>Open with Live Server</b>.
+    </div>
+    <article id="article">
+      <div class="welcome">
+        <h1>👋 Welcome to your Interview Playbook</h1>
+        <p>Pick a topic from the left. Each deep-dive is a 30-section, 5-level breakdown.<br/>
+        Use <b>Search</b> to jump, and <b>Mark complete</b> to track your progress (saved in this browser).</p>
+      </div>
+    </article>
+  </main>
+
+<script>
+const DEEPDIVES = [
+  { group: "�️ Start Here · Study Plan", items: [
+    { n: "🗓️", t: "7-Day Interview Prep Schedule", f: "STUDY-PLAN-7-day.md" },    { n: "🧠", t: "Memory Hooks & Analogies (Fast Recall)", f: "MEMORY-HOOKS.md" },  ]},
+  { group: "�🔬 Deep Mechanics (Level 2)", items: [
+    { n: "🔬", t: "RAG — Deep Mechanics", f: "DEEP-06-rag-mechanics.md" },
+    { n: "🔬", t: "Azure OpenAI — Deep Mechanics", f: "DEEP-01-azure-openai-mechanics.md" },
+    { n: "🔬", t: "Azure Architecture — Deep Mechanics", f: "DEEP-20-azure-architecture-mechanics.md" },
+    { n: "🔬", t: "Kubernetes — Deep Mechanics", f: "DEEP-39-kubernetes-mechanics.md" },
+    { n: "🔬", t: "AKS — Deep Mechanics", f: "DEEP-38-aks-mechanics.md" },
+    { n: "🔬", t: "Vector Search / AI Search — Deep Mechanics", f: "DEEP-07-vector-search-mechanics.md" },
+    { n: "🔬", t: "Terraform State — Deep Mechanics", f: "DEEP-61-terraform-state-mechanics.md" },
+    { n: "🔬", t: "FastAPI / Async — Deep Mechanics", f: "DEEP-69-fastapi-async-mechanics.md" },
+    { n: "🔬", t: "Agentic AI — Deep Mechanics", f: "DEEP-11-agentic-ai-mechanics.md" },
+    { n: "🔬", t: "Microservices — Deep Mechanics", f: "DEEP-123-microservices-mechanics.md" },
+    { n: "🔬", t: "System Design — Deep Mechanics", f: "DEEP-121-system-design-mechanics.md" },
+    { n: "🔬", t: "Semantic Kernel — Deep Mechanics", f: "DEEP-09-semantic-kernel-mechanics.md" },
+    { n: "🔬", t: "Event-Driven — Deep Mechanics", f: "DEEP-125-event-driven-mechanics.md" },
+    { n: "🔬", t: "Managed Identity / Entra — Deep Mechanics", f: "DEEP-107-managed-identity-mechanics.md" },
+    { n: "🔬", t: "Observability / OTel — Deep Mechanics", f: "DEEP-116-observability-mechanics.md" },
+    { n: "🔬", t: "Cost / FinOps — Deep Mechanics", f: "DEEP-117-finops-mechanics.md" },
+    { n: "🧠", t: "LLM Fundamentals — Deep Mechanics", f: "DEEP-04-llm-fundamentals-mechanics.md" },
+    { n: "🧠", t: "GenAI Fundamentals — Deep Mechanics", f: "DEEP-03-genai-fundamentals-mechanics.md" },
+    { n: "🧠", t: "Prompt Engineering — Deep Mechanics", f: "DEEP-05-prompt-engineering-mechanics.md" },
+    { n: "🧠", t: "LangChain — Deep Mechanics", f: "DEEP-10-langchain-mechanics.md" },
+    { n: "🧠", t: "LangGraph — Deep Mechanics", f: "DEEP-10b-langgraph-mechanics.md" },
+    { n: "🧠", t: "Agent Frameworks (AutoGen/CrewAI/SK) — Deep Mechanics", f: "DEEP-11b-agent-frameworks-mechanics.md" },
+    { n: "🧠", t: "Context, Tokens & Quantization — Deep Mechanics", f: "DEEP-04b-context-tokens-mechanics.md" },
+    { n: "🧠", t: "Embeddings & Embedding Models — Deep Mechanics", f: "DEEP-07b-embeddings-mechanics.md" },
+    { n: "🧠", t: "Reranking — Deep Mechanics", f: "DEEP-08b-reranking-mechanics.md" },
+    { n: "🧠", t: "GraphRAG — Deep Mechanics", f: "DEEP-06b-graphrag-mechanics.md" },
+    { n: "🧠", t: "Prompt & Semantic Caching — Deep Mechanics", f: "DEEP-05b-prompt-caching-mechanics.md" },
+    { n: "🧠", t: "Structured Outputs & JSON Mode — Deep Mechanics", f: "DEEP-14b-structured-outputs-mechanics.md" },
+    { n: "🧠", t: "LLM Observability & Tracing — Deep Mechanics", f: "DEEP-19b-llm-observability-mechanics.md" },
+    { n: "🧠", t: "RAG Evaluation (RAGAS) — Deep Mechanics", f: "DEEP-18b-rag-evaluation-mechanics.md" },
+    { n: "🧠", t: "Prompt Injection & LLM Security — Deep Mechanics", f: "DEEP-15b-prompt-injection-mechanics.md" },
+    { n: "🧠", t: "Vector Index Types (HNSW/IVF/PQ) — Deep Mechanics", f: "DEEP-07c-vector-index-types-mechanics.md" },
+    { n: "🧠", t: "Inference Optimization (Speculative Decoding) — Deep Mechanics", f: "DEEP-04c-inference-optimization-mechanics.md" },
+    { n: "🧠", t: "Fine-Tuning Methods (LoRA/QLoRA/RLHF) — Deep Mechanics", f: "DEEP-17b-finetuning-methods-mechanics.md" },
+    { n: "🧠", t: "LoRA & QLoRA (Full Detail) — Deep Mechanics", f: "DEEP-17c-lora-qlora-full-mechanics.md" },
+    { n: "🧠", t: "Model Routing & Cascading — Deep Mechanics", f: "DEEP-12b-model-routing-mechanics.md" },
+    { n: "🧠", t: "Agentic Memory — Deep Mechanics", f: "DEEP-11c-agentic-memory-mechanics.md" },
+    { n: "🧠", t: "Agent Evaluation — Deep Mechanics", f: "DEEP-18c-agent-evaluation-mechanics.md" },
+    { n: "🧠", t: "Multimodal & Vision Models — Deep Mechanics", f: "DEEP-03b-multimodal-vision-mechanics.md" },
+    { n: "🧠", t: "Diffusion & Image Generation — Deep Mechanics", f: "DEEP-03c-diffusion-image-generation-mechanics.md" },
+    { n: "🧠", t: "Speech (STT / TTS) — Deep Mechanics", f: "DEEP-04d-speech-stt-tts-mechanics.md" },
+    { n: "🧠", t: "Distillation & Model Compression — Deep Mechanics", f: "DEEP-17d-distillation-compression-mechanics.md" },
+    { n: "🧠", t: "RLHF, DPO & Alignment — Deep Mechanics", f: "DEEP-17e-rlhf-dpo-alignment-mechanics.md" },
+    { n: "🧠", t: "Evaluation Benchmarks — Deep Mechanics", f: "DEEP-18d-evaluation-benchmarks-mechanics.md" },
+    { n: "🧠", t: "Decoding & Sampling — Deep Mechanics", f: "DEEP-04e-decoding-sampling-mechanics.md" },
+    { n: "🧠", t: "Attention & KV-Cache (MHA/GQA/MLA) — Deep Mechanics", f: "DEEP-04f-attention-kv-cache-mechanics.md" },
+    { n: "🧠", t: "Positional Encodings (RoPE) — Deep Mechanics", f: "DEEP-04g-positional-encodings-rope-mechanics.md" },
+    { n: "🧠", t: "Mixture of Experts (MoE) — Deep Mechanics", f: "DEEP-04h-mixture-of-experts-mechanics.md" },
+    { n: "🧠", t: "Multi-Agent — Deep Mechanics", f: "DEEP-12-multi-agent-mechanics.md" },
+    { n: "🧠", t: "MCP — Deep Mechanics", f: "DEEP-13-mcp-mechanics.md" },
+    { n: "🧠", t: "Function Calling — Deep Mechanics", f: "DEEP-14-function-calling-mechanics.md" },
+    { n: "🧠", t: "AI Guardrails — Deep Mechanics", f: "DEEP-15-ai-guardrails-mechanics.md" },
+    { n: "🧠", t: "Responsible AI — Deep Mechanics", f: "DEEP-16-responsible-ai-mechanics.md" },
+    { n: "🧠", t: "Fine-Tuning — Deep Mechanics", f: "DEEP-17-fine-tuning-mechanics.md" },
+    { n: "🧠", t: "Model Evaluation — Deep Mechanics", f: "DEEP-18-model-evaluation-mechanics.md" },
+    { n: "🧠", t: "LLMOps — Deep Mechanics", f: "DEEP-19-llmops-mechanics.md" },
+    { n: "🧠", t: "Azure AI Foundry — Deep Mechanics", f: "DEEP-02-azure-ai-foundry-mechanics.md" },
+    { n: "📊", t: "Azure ML — Deep Mechanics", f: "DEEP-101-azure-ml-mechanics.md" },
+    { n: "📊", t: "MLflow — Deep Mechanics", f: "DEEP-102-mlflow-mechanics.md" },
+    { n: "📊", t: "MLOps — Deep Mechanics", f: "DEEP-103-mlops-mechanics.md" },
+    { n: "📊", t: "Model Registry — Deep Mechanics", f: "DEEP-104-model-registry-mechanics.md" },
+    { n: "📊", t: "Online Endpoints — Deep Mechanics", f: "DEEP-105-online-endpoints-mechanics.md" },
+    { n: "📊", t: "Data Engineering — Deep Mechanics", f: "DEEP-100-data-engineering-mechanics.md" },
+    { n: "📊", t: "Apache Spark — Deep Mechanics", f: "DEEP-99-spark-mechanics.md" },
+    { n: "📊", t: "Databricks — Deep Mechanics", f: "DEEP-98-databricks-mechanics.md" },
+    { n: "📊", t: "Azure Storage — Deep Mechanics", f: "DEEP-92-azure-storage-mechanics.md" },
+    { n: "📊", t: "Blob Storage — Deep Mechanics", f: "DEEP-93-blob-storage-mechanics.md" },
+    { n: "📊", t: "Data Lake Gen2 — Deep Mechanics", f: "DEEP-94-data-lake-gen2-mechanics.md" },
+    { n: "📊", t: "Azure SQL — Deep Mechanics", f: "DEEP-95-azure-sql-mechanics.md" },
+    { n: "📊", t: "Cosmos DB — Deep Mechanics", f: "DEEP-96-cosmos-db-mechanics.md" },
+    { n: "📊", t: "Redis — Deep Mechanics", f: "DEEP-97-redis-mechanics.md" },
+    { n: "🌐", t: "CAF — Deep Mechanics", f: "DEEP-22-caf-mechanics.md" },
+    { n: "🌐", t: "Well-Architected (WAF) — Deep Mechanics", f: "DEEP-23-waf-mechanics.md" },
+    { n: "🌐", t: "Landing Zones — Deep Mechanics", f: "DEEP-21-landing-zones-mechanics.md" },
+    { n: "🌐", t: "Hub-Spoke — Deep Mechanics", f: "DEEP-24-hub-spoke-mechanics.md" },
+    { n: "🌐", t: "VNet — Deep Mechanics", f: "DEEP-25-vnet-mechanics.md" },
+    { n: "🌐", t: "NSG — Deep Mechanics", f: "DEEP-26-nsg-mechanics.md" },
+    { n: "🌐", t: "Azure Firewall — Deep Mechanics", f: "DEEP-27-azure-firewall-mechanics.md" },
+    { n: "🌐", t: "Private Endpoint — Deep Mechanics", f: "DEEP-28-private-endpoint-mechanics.md" },
+    { n: "🌐", t: "Private Link — Deep Mechanics", f: "DEEP-29-private-link-mechanics.md" },
+    { n: "🌐", t: "ExpressRoute — Deep Mechanics", f: "DEEP-30-expressroute-mechanics.md" },
+    { n: "🌐", t: "Load Balancer — Deep Mechanics", f: "DEEP-31-load-balancer-mechanics.md" },
+    { n: "🌐", t: "Application Gateway — Deep Mechanics", f: "DEEP-32-application-gateway-mechanics.md" },
+    { n: "🌐", t: "Front Door — Deep Mechanics", f: "DEEP-33-front-door-mechanics.md" },
+    { n: "🌐", t: "DNS — Deep Mechanics", f: "DEEP-34-dns-mechanics.md" },
+    { n: "🌐", t: "High Availability — Deep Mechanics", f: "DEEP-36-high-availability-mechanics.md" },
+    { n: "🌐", t: "RTO / RPO — Deep Mechanics", f: "DEEP-37-rto-rpo-mechanics.md" },
+    { n: "🌐", t: "Disaster Recovery — Deep Mechanics", f: "DEEP-35-disaster-recovery-mechanics.md" },
+    { n: "☸️", t: "Pods — Deep Mechanics", f: "DEEP-40-pods-mechanics.md" },
+    { n: "☸️", t: "Deployments — Deep Mechanics", f: "DEEP-41-deployments-mechanics.md" },
+    { n: "☸️", t: "ReplicaSets — Deep Mechanics", f: "DEEP-42-replicasets-mechanics.md" },
+    { n: "☸️", t: "Services — Deep Mechanics", f: "DEEP-43-services-mechanics.md" },
+    { n: "☸️", t: "Ingress — Deep Mechanics", f: "DEEP-44-ingress-mechanics.md" },
+    { n: "☸️", t: "Helm — Deep Mechanics", f: "DEEP-45-helm-mechanics.md" },
+    { n: "☸️", t: "Secrets — Deep Mechanics", f: "DEEP-46-secrets-mechanics.md" },
+    { n: "☸️", t: "ConfigMaps — Deep Mechanics", f: "DEEP-47-configmaps-mechanics.md" },
+    { n: "☸️", t: "HPA — Deep Mechanics", f: "DEEP-48-hpa-mechanics.md" },
+    { n: "☸️", t: "Cluster Autoscaler — Deep Mechanics", f: "DEEP-49-cluster-autoscaler-mechanics.md" },
+    { n: "☸️", t: "Service Mesh — Deep Mechanics", f: "DEEP-50-service-mesh-mechanics.md" },
+    { n: "☸️", t: "Istio — Deep Mechanics", f: "DEEP-51-istio-mechanics.md" },
+    { n: "☸️", t: "AKS Security — Deep Mechanics", f: "DEEP-52-aks-security-mechanics.md" },
+    { n: "☸️", t: "AKS Networking — Deep Mechanics", f: "DEEP-53-aks-networking-mechanics.md" },
+    { n: "☸️", t: "AKS Monitoring — Deep Mechanics", f: "DEEP-54-aks-monitoring-mechanics.md" },
+    { n: "☸️", t: "AKS Cost Optimization — Deep Mechanics", f: "DEEP-55-aks-cost-optimization-mechanics.md" },
+    { n: "🐳", t: "Docker Fundamentals — Deep Mechanics", f: "DEEP-56-docker-fundamentals-mechanics.md" },
+    { n: "🐳", t: "Containerization — Deep Mechanics", f: "DEEP-57-containerization-mechanics.md" },
+    { n: "🐳", t: "Image Optimization — Deep Mechanics", f: "DEEP-58-image-optimization-mechanics.md" },
+    { n: "🐳", t: "Container Registries — Deep Mechanics", f: "DEEP-59-container-registries-mechanics.md" },
+    { n: "🐳", t: "Azure Container Registry — Deep Mechanics", f: "DEEP-60-azure-container-registry-mechanics.md" },
+    { n: "⚙️", t: "Terraform Fundamentals — Deep Mechanics", f: "DEEP-61-terraform-fundamentals-mechanics.md" },
+    { n: "⚙️", t: "Terraform Remote Backend — Deep Mechanics", f: "DEEP-63-remote-backend-mechanics.md" },
+    { n: "⚙️", t: "Terraform Modules — Deep Mechanics", f: "DEEP-64-modules-mechanics.md" },
+    { n: "⚙️", t: "Terraform Workspaces — Deep Mechanics", f: "DEEP-65-workspaces-mechanics.md" },
+    { n: "⚙️", t: "Terraform Best Practices — Deep Mechanics", f: "DEEP-66-best-practices-mechanics.md" },
+    { n: "⚙️", t: "Terraform on Azure — Deep Mechanics", f: "DEEP-67-azure-terraform-mechanics.md" },
+    { n: "⚙️", t: "Terraform Security — Deep Mechanics", f: "DEEP-68-terraform-security-mechanics.md" },
+    { n: "🐍", t: "REST APIs — Deep Mechanics", f: "DEEP-71-rest-apis-mechanics.md" },
+    { n: "🐍", t: "Dependency Injection — Deep Mechanics", f: "DEEP-72-dependency-injection-mechanics.md" },
+    { n: "🐍", t: "Pydantic — Deep Mechanics", f: "DEEP-73-pydantic-mechanics.md" },
+    { n: "🐍", t: "SQLAlchemy — Deep Mechanics", f: "DEEP-74-sqlalchemy-mechanics.md" },
+    { n: "🐍", t: "Python Performance — Deep Mechanics", f: "DEEP-75-performance-mechanics.md" },
+    { n: "🐍", t: "pytest — Deep Mechanics", f: "DEEP-76-pytest-mechanics.md" },
+    { n: "🐍", t: "Unit Testing — Deep Mechanics", f: "DEEP-77-unit-testing-mechanics.md" },
+    { n: "🐍", t: "Integration Testing — Deep Mechanics", f: "DEEP-78-integration-testing-mechanics.md" },
+    { n: "🚀", t: "Azure DevOps — Deep Mechanics", f: "DEEP-79-azure-devops-mechanics.md" },
+    { n: "🚀", t: "GitHub Actions — Deep Mechanics", f: "DEEP-80-github-actions-mechanics.md" },
+    { n: "🚀", t: "CI/CD Architecture — Deep Mechanics", f: "DEEP-81-cicd-architecture-mechanics.md" },
+    { n: "🚀", t: "Blue-Green Deployment — Deep Mechanics", f: "DEEP-82-blue-green-mechanics.md" },
+    { n: "🚀", t: "Canary Deployment — Deep Mechanics", f: "DEEP-83-canary-mechanics.md" },
+    { n: "🚀", t: "GitOps — Deep Mechanics", f: "DEEP-84-gitops-mechanics.md" },
+    { n: "🚀", t: "Argo CD — Deep Mechanics", f: "DEEP-85-argocd-mechanics.md" },
+    { n: "📨", t: "API Management — Deep Mechanics", f: "DEEP-86-api-management-mechanics.md" },
+    { n: "📨", t: "Azure Functions — Deep Mechanics", f: "DEEP-87-azure-functions-mechanics.md" },
+    { n: "📨", t: "Service Bus — Deep Mechanics", f: "DEEP-88-service-bus-mechanics.md" },
+    { n: "📨", t: "Event Grid — Deep Mechanics", f: "DEEP-89-event-grid-mechanics.md" },
+    { n: "📨", t: "Event Hubs — Deep Mechanics", f: "DEEP-90-event-hub-mechanics.md" },
+    { n: "📨", t: "Messaging Patterns — Deep Mechanics", f: "DEEP-91-messaging-patterns-mechanics.md" },
+    { n: "🔐", t: "Entra ID — Deep Mechanics", f: "DEEP-106-entra-id-mechanics.md" },
+    { n: "🔐", t: "Key Vault — Deep Mechanics", f: "DEEP-108-key-vault-mechanics.md" },
+    { n: "🔐", t: "Azure RBAC — Deep Mechanics", f: "DEEP-109-rbac-mechanics.md" },
+    { n: "🔐", t: "PIM — Deep Mechanics", f: "DEEP-110-pim-mechanics.md" },
+    { n: "🔐", t: "Defender for Cloud — Deep Mechanics", f: "DEEP-111-defender-for-cloud-mechanics.md" },
+    { n: "🔐", t: "Microsoft Sentinel — Deep Mechanics", f: "DEEP-112-sentinel-mechanics.md" },
+    { n: "📈", t: "Azure Monitor — Deep Mechanics", f: "DEEP-113-azure-monitoring-mechanics.md" },
+    { n: "📈", t: "Log Analytics & KQL — Deep Mechanics", f: "DEEP-114-log-analytics-mechanics.md" },
+    { n: "📈", t: "Application Insights — Deep Mechanics", f: "DEEP-115-application-insights-mechanics.md" },
+    { n: "💰", t: "FinOps — Deep Mechanics", f: "DEEP-118-finops-mechanics.md" },
+    { n: "💰", t: "Azure Pricing — Deep Mechanics", f: "DEEP-119-azure-pricing-mechanics.md" },
+    { n: "💰", t: "Capacity Planning — Deep Mechanics", f: "DEEP-120-capacity-planning-mechanics.md" },
+    { n: "🏛️", t: "Solution Architecture — Deep Mechanics", f: "DEEP-122-solution-architecture-mechanics.md" },
+    { n: "🏛️", t: "Domain-Driven Design — Deep Mechanics", f: "DEEP-124-ddd-mechanics.md" },
+    { n: "🏛️", t: "CQRS — Deep Mechanics", f: "DEEP-126-cqrs-mechanics.md" },
+    { n: "🏛️", t: "API-First Design — Deep Mechanics", f: "DEEP-127-api-first-mechanics.md" },
+  ]},
+  { group: "🎯 Level 3 · System Design & Mock Interviews", items: [
+    { n: "🎯", t: "System Design · Enterprise RAG Platform", f: "L3-01-enterprise-rag-platform.md" },
+    { n: "🎯", t: "System Design · Production Multi-Agent System", f: "L3-02-multi-agent-system.md" },
+    { n: "🎯", t: "System Design · Enterprise LLM Gateway", f: "L3-03-llm-gateway-platform.md" },
+    { n: "🎯", t: "System Design · High-Scale Real-Time GenAI API", f: "L3-04-realtime-genai-api.md" },
+    { n: "🎯", t: "System Design · Secure GenAI Landing Zone", f: "L3-05-secure-genai-landing-zone.md" },
+    { n: "🎯", t: "System Design · LLMOps / Evaluation Platform", f: "L3-06-llmops-platform.md" },
+    { n: "🎤", t: "Mock Interview · Rapid-Fire Drills", f: "L3-07-rapid-fire-drills.md" },
+    { n: "🎤", t: "Mock Interview · Whiteboard Prompts & Delivery", f: "L3-08-whiteboard-prompts.md" },
+  ]},
+  { group: "⭐ Deep Dives · Phase 1 GenAI Core", items: [
+    { n: "03", t: "GenAI Fundamentals", f: "03-genai-fundamentals.md" },
+    { n: "01", t: "Azure OpenAI Service", f: "01-azure-openai-service.md" },
+    { n: "06", t: "RAG Architecture", f: "06-rag-architecture.md" },
+    { n: "08", t: "Azure AI Search", f: "08-azure-ai-search.md" },
+    { n: "11", t: "Agentic AI", f: "11-agentic-ai.md" },
+    { n: "13", t: "MCP (Model Context Protocol)", f: "13-mcp.md" },
+    { n: "09", t: "Semantic Kernel", f: "09-semantic-kernel.md" },
+  ]},
+  { group: "⭐ Deep Dives · Phase 2 Platform", items: [
+    { n: "38", t: "AKS Architecture", f: "38-aks-architecture.md" },
+    { n: "39", t: "Kubernetes Fundamentals", f: "39-kubernetes-fundamentals.md" },
+    { n: "56", t: "Docker Fundamentals", f: "56-docker-fundamentals.md" },
+    { n: "69", t: "FastAPI", f: "69-fastapi.md" },
+    { n: "70", t: "Python Architecture", f: "70-python-architecture.md" },
+  ]},
+  { group: "⭐ Deep Dives · Phase 3 Azure", items: [
+    { n: "21", t: "Azure Landing Zones", f: "21-azure-landing-zones.md" },
+    { n: "25", t: "Networking", f: "25-networking.md" },
+    { n: "86", t: "API Management", f: "86-api-management.md" },
+    { n: "33", t: "Front Door", f: "33-front-door.md" },
+    { n: "24", t: "Security", f: "24-security.md" },
+  ]},
+  { group: "⭐ Deep Dives · Phase 4 Delivery", items: [
+    { n: "61", t: "Terraform Fundamentals", f: "61-terraform-fundamentals.md" },
+    { n: "80", t: "GitHub Actions", f: "80-github-actions.md" },
+    { n: "79", t: "Azure DevOps", f: "79-azure-devops.md" },
+  ]},
+  { group: "⭐ Deep Dives · Phase 5 Breadth", items: [
+    { n: "14", t: ".NET Core Architecture", f: "14-dotnet-core-architecture.md" },
+    { n: "123", t: "Microservices", f: "123-microservices.md" },
+    { n: "121", t: "Enterprise System Design", f: "121-enterprise-system-design.md" },
+  ]},
+  { group: "📝 Question Banks", items: [
+    { n: "Q1", t: "Top 100 Architect", f: "Q-bank-01-top-100-architect.md" },
+    { n: "Q2", t: "Top 50 GenAI & LLM", f: "Q-bank-02-top-50-genai.md" },
+    { n: "Q3", t: "Top 50 Kubernetes", f: "Q-bank-03-top-50-kubernetes.md" },
+    { n: "Q4", t: "Top 50 Python", f: "Q-bank-04-top-50-python.md" },
+    { n: "Q5", t: "Top 50 .NET Core", f: "Q-bank-05-top-50-dotnet-core.md" },
+    { n: "Q6", t: "Top 50 Terraform", f: "Q-bank-06-top-50-terraform.md" },
+    { n: "Q7", t: "Top 50 Azure Architecture", f: "Q-bank-07-top-50-azure-architecture.md" },
+  ]},
+  { group: "📅 Plan", items: [
+    { n: "★", t: "Daily Command / Study Plan", f: "DAILY-COMMAND.md" },
+  ]},
+];
+
+// All 127 workspace topics (../topics/) grouped by domain
+const P = "../topics/";
+const ALLTOPICS = [
+  { group: "GenAI & LLM (01–19)", items: [
+    { n:"01", t:"Azure OpenAI Service", f:P+"01-azure-openai-service.md" },
+    { n:"02", t:"Azure AI Foundry", f:P+"02-azure-ai-foundry.md" },
+    { n:"03", t:"GenAI Fundamentals", f:P+"03-genai-fundamentals.md" },
+    { n:"04", t:"LLM Fundamentals", f:P+"04-llm-fundamentals.md" },
+    { n:"05", t:"Prompt Engineering", f:P+"05-prompt-engineering.md" },
+    { n:"06", t:"RAG Architecture", f:P+"06-rag-architecture.md" },
+    { n:"07", t:"Vector Databases", f:P+"07-vector-databases.md" },
+    { n:"08", t:"Azure AI Search", f:P+"08-azure-ai-search.md" },
+    { n:"09", t:"Semantic Kernel", f:P+"09-semantic-kernel.md" },
+    { n:"10", t:"LangChain", f:P+"10-langchain.md" },
+    { n:"11", t:"Agentic AI", f:P+"11-agentic-ai.md" },
+    { n:"12", t:"Multi-Agent Architecture", f:P+"12-multi-agent-architecture.md" },
+    { n:"13", t:"MCP", f:P+"13-mcp.md" },
+    { n:"14", t:"Function Calling", f:P+"14-function-calling.md" },
+    { n:"15", t:"AI Guardrails", f:P+"15-ai-guardrails.md" },
+    { n:"16", t:"Responsible AI", f:P+"16-responsible-ai.md" },
+    { n:"17", t:"Fine-Tuning", f:P+"17-fine-tuning.md" },
+    { n:"18", t:"Model Evaluation", f:P+"18-model-evaluation.md" },
+    { n:"19", t:"LLMOps", f:P+"19-llmops.md" },
+  ]},
+  { group: "Azure Architecture & Networking (20–37)", items: [
+    { n:"20", t:"Azure Architecture Fundamentals", f:P+"20-azure-architecture-fundamentals.md" },
+    { n:"21", t:"Azure Landing Zones", f:P+"21-azure-landing-zones.md" },
+    { n:"22", t:"CAF", f:P+"22-caf.md" },
+    { n:"23", t:"WAF (Well-Architected)", f:P+"23-waf.md" },
+    { n:"24", t:"Hub-Spoke", f:P+"24-hub-spoke.md" },
+    { n:"25", t:"VNet", f:P+"25-vnet.md" },
+    { n:"26", t:"NSG", f:P+"26-nsg.md" },
+    { n:"27", t:"Azure Firewall", f:P+"27-azure-firewall.md" },
+    { n:"28", t:"Private Endpoint", f:P+"28-private-endpoint.md" },
+    { n:"29", t:"Private Link", f:P+"29-private-link.md" },
+    { n:"30", t:"ExpressRoute", f:P+"30-expressroute.md" },
+    { n:"31", t:"Load Balancer", f:P+"31-load-balancer.md" },
+    { n:"32", t:"Application Gateway", f:P+"32-application-gateway.md" },
+    { n:"33", t:"Front Door", f:P+"33-front-door.md" },
+    { n:"34", t:"DNS", f:P+"34-dns.md" },
+    { n:"35", t:"Disaster Recovery", f:P+"35-disaster-recovery.md" },
+    { n:"36", t:"High Availability", f:P+"36-high-availability.md" },
+    { n:"37", t:"RTO / RPO", f:P+"37-rto-rpo.md" },
+  ]},
+  { group: "AKS & Kubernetes (38–55)", items: [
+    { n:"38", t:"AKS Architecture", f:P+"38-aks-architecture.md" },
+    { n:"39", t:"Kubernetes Fundamentals", f:P+"39-kubernetes-fundamentals.md" },
+    { n:"40", t:"Pods", f:P+"40-pods.md" },
+    { n:"41", t:"Deployments", f:P+"41-deployments.md" },
+    { n:"42", t:"ReplicaSets", f:P+"42-replicasets.md" },
+    { n:"43", t:"Services", f:P+"43-services.md" },
+    { n:"44", t:"Ingress", f:P+"44-ingress.md" },
+    { n:"45", t:"Helm", f:P+"45-helm.md" },
+    { n:"46", t:"Secrets", f:P+"46-secrets.md" },
+    { n:"47", t:"ConfigMaps", f:P+"47-configmaps.md" },
+    { n:"48", t:"HPA", f:P+"48-hpa.md" },
+    { n:"49", t:"Cluster Autoscaler", f:P+"49-cluster-autoscaler.md" },
+    { n:"50", t:"Service Mesh", f:P+"50-service-mesh.md" },
+    { n:"51", t:"Istio", f:P+"51-istio.md" },
+    { n:"52", t:"AKS Security", f:P+"52-aks-security.md" },
+    { n:"53", t:"AKS Networking", f:P+"53-aks-networking.md" },
+    { n:"54", t:"AKS Monitoring", f:P+"54-aks-monitoring.md" },
+    { n:"55", t:"AKS Cost Optimization", f:P+"55-aks-cost-optimization.md" },
+  ]},
+  { group: "Docker & Containers (56–60)", items: [
+    { n:"56", t:"Docker Fundamentals", f:P+"56-docker-fundamentals.md" },
+    { n:"57", t:"Containerization", f:P+"57-containerization.md" },
+    { n:"58", t:"Image Optimization", f:P+"58-image-optimization.md" },
+    { n:"59", t:"Container Registries", f:P+"59-container-registries.md" },
+    { n:"60", t:"Azure Container Registry", f:P+"60-azure-container-registry.md" },
+  ]},
+  { group: "Terraform & IaC (61–68)", items: [
+    { n:"61", t:"Terraform Fundamentals", f:P+"61-terraform-fundamentals.md" },
+    { n:"62", t:"State Management", f:P+"62-state-management.md" },
+    { n:"63", t:"Remote Backend", f:P+"63-remote-backend.md" },
+    { n:"64", t:"Modules", f:P+"64-modules.md" },
+    { n:"65", t:"Workspaces", f:P+"65-workspaces.md" },
+    { n:"66", t:"Best Practices", f:P+"66-best-practices.md" },
+    { n:"67", t:"Azure Terraform", f:P+"67-azure-terraform.md" },
+    { n:"68", t:"Terraform Security", f:P+"68-terraform-security.md" },
+  ]},
+  { group: "Python & FastAPI (69–78)", items: [
+    { n:"69", t:"FastAPI", f:P+"69-fastapi.md" },
+    { n:"70", t:"Async Programming", f:P+"70-async-programming.md" },
+    { n:"71", t:"REST APIs", f:P+"71-rest-apis.md" },
+    { n:"72", t:"Dependency Injection", f:P+"72-dependency-injection.md" },
+    { n:"73", t:"Pydantic", f:P+"73-pydantic.md" },
+    { n:"74", t:"SQLAlchemy", f:P+"74-sqlalchemy.md" },
+    { n:"75", t:"Performance", f:P+"75-performance.md" },
+    { n:"76", t:"Pytest", f:P+"76-pytest.md" },
+    { n:"77", t:"Unit Testing", f:P+"77-unit-testing.md" },
+    { n:"78", t:"Integration Testing", f:P+"78-integration-testing.md" },
+  ]},
+  { group: "DevOps & CI/CD (79–85)", items: [
+    { n:"79", t:"Azure DevOps", f:P+"79-azure-devops.md" },
+    { n:"80", t:"GitHub Actions", f:P+"80-github-actions.md" },
+    { n:"81", t:"CI/CD Architecture", f:P+"81-cicd-architecture.md" },
+    { n:"82", t:"Blue-Green", f:P+"82-blue-green.md" },
+    { n:"83", t:"Canary", f:P+"83-canary.md" },
+    { n:"84", t:"GitOps", f:P+"84-gitops.md" },
+    { n:"85", t:"ArgoCD", f:P+"85-argocd.md" },
+  ]},
+  { group: "Integration & Messaging (86–91)", items: [
+    { n:"86", t:"API Management", f:P+"86-api-management.md" },
+    { n:"87", t:"Azure Functions", f:P+"87-azure-functions.md" },
+    { n:"88", t:"Service Bus", f:P+"88-service-bus.md" },
+    { n:"89", t:"Event Grid", f:P+"89-event-grid.md" },
+    { n:"90", t:"Event Hub", f:P+"90-event-hub.md" },
+    { n:"91", t:"Messaging Patterns", f:P+"91-messaging-patterns.md" },
+  ]},
+  { group: "Data & Storage (92–99)", items: [
+    { n:"92", t:"Azure Storage", f:P+"92-azure-storage.md" },
+    { n:"93", t:"Blob Storage", f:P+"93-blob-storage.md" },
+    { n:"94", t:"Data Lake Gen2", f:P+"94-data-lake-gen2.md" },
+    { n:"95", t:"Azure SQL", f:P+"95-azure-sql.md" },
+    { n:"96", t:"Cosmos DB", f:P+"96-cosmos-db.md" },
+    { n:"97", t:"Redis", f:P+"97-redis.md" },
+    { n:"98", t:"Databricks", f:P+"98-databricks.md" },
+    { n:"99", t:"Spark", f:P+"99-spark.md" },
+  ]},
+  { group: "ML & MLOps (100–105)", items: [
+    { n:"100", t:"Data Engineering", f:P+"100-data-engineering.md" },
+    { n:"101", t:"Azure ML", f:P+"101-azure-ml.md" },
+    { n:"102", t:"MLflow", f:P+"102-mlflow.md" },
+    { n:"103", t:"MLOps", f:P+"103-mlops.md" },
+    { n:"104", t:"Model Registry", f:P+"104-model-registry.md" },
+    { n:"105", t:"Online Endpoints", f:P+"105-online-endpoints.md" },
+  ]},
+  { group: "Security & Identity (106–112)", items: [
+    { n:"106", t:"Entra ID", f:P+"106-entra-id.md" },
+    { n:"107", t:"Managed Identity", f:P+"107-managed-identity.md" },
+    { n:"108", t:"Key Vault", f:P+"108-key-vault.md" },
+    { n:"109", t:"RBAC", f:P+"109-rbac.md" },
+    { n:"110", t:"PIM", f:P+"110-pim.md" },
+    { n:"111", t:"Defender for Cloud", f:P+"111-defender-for-cloud.md" },
+    { n:"112", t:"Sentinel", f:P+"112-sentinel.md" },
+  ]},
+  { group: "Observability (113–116)", items: [
+    { n:"113", t:"Azure Monitoring", f:P+"113-azure-monitoring.md" },
+    { n:"114", t:"Log Analytics", f:P+"114-log-analytics.md" },
+    { n:"115", t:"Application Insights", f:P+"115-application-insights.md" },
+    { n:"116", t:"OpenTelemetry", f:P+"116-opentelemetry.md" },
+  ]},
+  { group: "Cost & FinOps (117–120)", items: [
+    { n:"117", t:"Cost Optimization", f:P+"117-cost-optimization.md" },
+    { n:"118", t:"FinOps", f:P+"118-finops.md" },
+    { n:"119", t:"Azure Pricing", f:P+"119-azure-pricing.md" },
+    { n:"120", t:"Capacity Planning", f:P+"120-capacity-planning.md" },
+  ]},
+  { group: "Architecture Patterns (121–127)", items: [
+    { n:"121", t:"Enterprise Architecture", f:P+"121-enterprise-architecture.md" },
+    { n:"122", t:"Solution Architecture", f:P+"122-solution-architecture.md" },
+    { n:"123", t:"Microservices", f:P+"123-microservices.md" },
+    { n:"124", t:"DDD", f:P+"124-ddd.md" },
+    { n:"125", t:"Event-Driven", f:P+"125-event-driven.md" },
+    { n:"126", t:"CQRS", f:P+"126-cqrs.md" },
+    { n:"127", t:"API-First", f:P+"127-api-first.md" },
+  ]},
+];
+
+let TOPICS = DEEPDIVES;
+
+const nav = document.getElementById('nav');
+const article = document.getElementById('article');
+const crumb = document.getElementById('crumb');
+const markBtn = document.getElementById('markBtn');
+const banner = document.getElementById('banner');
+let current = null;
+const done = JSON.parse(localStorage.getItem('donedeepdives') || '{}');
+
+marked.setOptions({
+  highlight: (code, lang) => {
+    try { return hljs.highlight(code, { language: hljs.getLanguage(lang) ? lang : 'plaintext' }).value; }
+    catch { return code; }
+  }
+});
+
+// Build sidebar
+function buildNav() {
+  nav.innerHTML = '';
+  TOPICS.forEach(g => {
+    const gt = document.createElement('div'); gt.className = 'group-title'; gt.textContent = g.group;
+    nav.appendChild(gt);
+    g.items.forEach(it => {
+      const a = document.createElement('a');
+      a.className = 'item'; a.dataset.file = it.f; a.dataset.title = it.t;
+      a.innerHTML = `<span class="num">${it.n}</span><span class="label">${it.t}</span><span class="chk">✓</span>`;
+      if (done[it.f]) a.classList.add('completed');
+      a.onclick = () => load(it, a);
+      nav.appendChild(a);
+    });
+  });
+  updateProgress();
+}
+buildNav();
+
+const libDeep = document.getElementById('libDeep');
+const libAll = document.getElementById('libAll');
+libDeep.onclick = () => { TOPICS = DEEPDIVES; libDeep.classList.add('active'); libAll.classList.remove('active'); document.getElementById('search').value=''; buildNav(); };
+libAll.onclick = () => { TOPICS = ALLTOPICS; libAll.classList.add('active'); libDeep.classList.remove('active'); document.getElementById('search').value=''; buildNav(); };
+
+async function load(it, el) {
+  document.querySelectorAll('.item').forEach(x => x.classList.remove('active'));
+  el.classList.add('active');
+  current = it;
+  crumb.textContent = it.t;
+  markBtn.style.display = 'inline-block';
+  markBtn.textContent = done[it.f] ? '✓ Completed (undo)' : '✓ Mark complete';
+  article.innerHTML = '<div class="welcome"><p>Loading…</p></div>';
+  document.getElementById('content').scrollTop = 0;
+  try {
+    const res = await fetch(it.f);
+    if (!res.ok) throw new Error('not ok');
+    let md = await res.text();
+    // strip a leading ```markdown fence if a file was wrapped
+    md = md.replace(/^````?markdown\s*\n/, '').replace(/\n````?\s*$/, '');
+    article.innerHTML = marked.parse(md);
+    highlightKeywords();
+    banner.style.display = 'none';
+    if (window.innerWidth <= 760) document.getElementById('sidebar').classList.remove('open');
+  } catch (e) {
+    banner.style.display = 'block';
+    article.innerHTML = '<div class="welcome"><h1>Couldn\'t load this file</h1><p>See the yellow note above — you need to open this page through a local server (Live Server or <code>python -m http.server</code>), not by double-clicking.</p></div>';
+  }
+}
+
+markBtn.onclick = () => {
+  if (!current) return;
+  if (done[current.f]) { delete done[current.f]; } else { done[current.f] = true; }
+  localStorage.setItem('donedeepdives', JSON.stringify(done));
+  const el = document.querySelector(`.item[data-file="${current.f}"]`);
+  el.classList.toggle('completed', !!done[current.f]);
+  markBtn.textContent = done[current.f] ? '✓ Completed (undo)' : '✓ Mark complete';
+  updateProgress();
+};
+
+function updateProgress() {
+  const total = TOPICS.reduce((s, g) => s + g.items.length, 0);
+  const inLib = new Set(); TOPICS.forEach(g=>g.items.forEach(i=>inLib.add(i.f)));
+  const d = Object.keys(done).filter(f => inLib.has(f)).length;
+  document.getElementById('progressText').textContent = `${d} / ${total} completed`;
+  document.getElementById('progressBar').style.width = (total ? d / total * 100 : 0) + '%';
+}
+
+// Search
+document.getElementById('search').addEventListener('input', e => {
+  const q = e.target.value.toLowerCase();
+  document.querySelectorAll('.item').forEach(el => {
+    const match = el.dataset.title.toLowerCase().includes(q) || el.querySelector('.num').textContent.toLowerCase().includes(q);
+    el.style.display = match ? 'flex' : 'none';
+  });
+  document.querySelectorAll('.group-title').forEach(g => g.style.display = q ? 'none' : 'block');
+});
+
+// ==== Auto-highlight important terms (skips code blocks) ====
+function highlightKeywords() {
+  // Key architect keywords to visually stress
+  const KW = [
+    "Managed Identity","Workload Identity","Private Endpoint","Private Endpoints","private endpoint","private endpoints",
+    "Key Vault","OIDC","Zero Trust","least privilege","RBAC","Azure Policy","Azure Firewall",
+    "eventual consistency","strong consistency","idempotent","idempotency","Saga","circuit breaker","bulkhead",
+    "CAP theorem","bounded context","database-per-service","distributed monolith","outbox",
+    "async all the way","event loop","GIL","generational GC","Server GC","middleware pipeline","captive dependency",
+    "RAG","hallucination","hallucinations","grounding","embeddings","vector search","semantic cache","prompt injection",
+    "fine-tuning","context window","function calling","ReAct","PTU","PTUs","rate limit","429",
+    "HPA","Cluster Autoscaler","KEDA","readiness","liveness","requests and limits","PodDisruptionBudget",
+    "remote state","state locking","plan","apply","for_each","drift","blast radius",
+    "hub-and-spoke","hub-spoke","Front Door","Application Gateway","Load Balancer","WAF","NSG",
+    "RTO","RPO","active-active","active-passive","availability zones","multi-region",
+    "WAF pillars","Well-Architected","Landing Zone","Landing Zones","CAF","defense in depth","graceful degradation",
+    "tradeoff","tradeoffs","observability","distributed tracing","OpenTelemetry","correlation IDs"
+  ];
+  // Sort longest first so multi-word phrases win
+  KW.sort((a,b)=>b.length-a.length);
+  const kwRe = new RegExp('\\b(' + KW.map(w=>w.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')).join('|') + ')\\b','gi');
+  // Mnemonic pattern e.g. B-A-R, T-R-P, C-C-I-O, C-E-A-D-H-D-I-T, S-S-T
+  const mnemRe = /\b([A-Z](?:-[A-Z]){1,9})\b/g;
+  // Warning words
+  const warnRe = /\b(never|NEVER|don't|do not|avoid|NOT|must not|anti-pattern)\b/g;
+
+  const skip = new Set(['CODE','PRE','A','H1','H2','H3','STRONG','TH']);
+  const walker = document.createTreeWalker(article, NodeFilter.SHOW_TEXT, {
+    acceptNode: n => (n.parentNode && skip.has(n.parentNode.nodeName)) || !n.nodeValue.trim()
+      ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_ACCEPT
+  });
+  const nodes = []; let cur;
+  while ((cur = walker.nextNode())) nodes.push(cur);
+  nodes.forEach(node => {
+    let html = node.nodeValue
+      .replace(/[&<>]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+    html = html.replace(mnemRe, '<span class="mnem">$1</span>');
+    html = html.replace(kwRe, '<span class="kw">$1</span>');
+    html = html.replace(warnRe, '<span class="warn">$1</span>');
+    if (html !== node.nodeValue) {
+      const span = document.createElement('span');
+      span.innerHTML = html;
+      node.parentNode.replaceChild(span, node);
+    }
+  });
+}
+
+// Highlighter marker toggle (background on bold)
+const hlBtn = document.getElementById('hlBtn');
+if (localStorage.getItem('hlmode') === 'on') document.body.classList.add('hl');
+hlBtn.onclick = () => {
+  document.body.classList.toggle('hl');
+  localStorage.setItem('hlmode', document.body.classList.contains('hl') ? 'on' : 'off');
+};
+
+// Theme
+const themeBtn = document.getElementById('themeBtn');
+const savedTheme = localStorage.getItem('theme') || 'dark';
+if (savedTheme === 'light') { document.documentElement.setAttribute('data-theme', 'light'); themeBtn.textContent = '☀️'; }
+themeBtn.onclick = () => {
+  const light = document.documentElement.getAttribute('data-theme') === 'light';
+  if (light) { document.documentElement.removeAttribute('data-theme'); themeBtn.textContent = '🌙'; localStorage.setItem('theme','dark'); }
+  else { document.documentElement.setAttribute('data-theme','light'); themeBtn.textContent = '☀️'; localStorage.setItem('theme','light'); }
+};
+
+document.getElementById('menuBtn').onclick = () => document.getElementById('sidebar').classList.toggle('open');
+</script>
+</body>
+</html>
